@@ -9,8 +9,7 @@ class Game {
     private ctx: CanvasRenderingContext2D = null;
     private mapData: IMap = null;
     private player: Player = null;
-    private isMoving = false;
-    private direction: Direction | null = null
+
     private lives: number = null;
     constructor() {
         this.canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
@@ -23,39 +22,29 @@ class Game {
     }
     keyDownHandler = (e) => {
         if (e.keyCode === 39) {
-            this.isMoving = true;
-            this.direction = "Right";
+            this.player.handleDirectionChange("Right")
         } else if (e.keyCode === 37) {
-            this.isMoving = true;
-            this.direction = "Left";
+            this.player.handleDirectionChange("Left")
         } else if (e.keyCode === 38) {
-            this.isMoving = true;
-            this.direction = "Up";
+            this.player.handleDirectionChange("Up")
         } else if (e.keyCode === 40) {
-            this.isMoving = true;
-            this.direction = "Down";
+            this.player.handleDirectionChange("Down")
         }
     }
     draw = () => {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         mapRenderer(this.mapData, this.ctx)
-        if (this.isMoving && Boolean(this.direction)) {
-            if (!hasWallCollision(this.player, this.mapData, this.direction)) {
-                this.movePlayer()
-            }
-        }
+        this.movePlayer()
         this.player.render();
         requestAnimationFrame(this.draw);
     }
     movePlayer = () => {
-        if (this.isMoving && Boolean(this.direction)) {
-            this.player.move(this.direction);
-        }
+        this.player.move(this.mapData);
     }
 }
 
-const hasWallCollision = (player: Player, map: IMap, direction: Direction): boolean => {
-    const { x, y } = player.getCoordinates();
+export const hasWallCollision = (coords: { x: number, y: number }, map: IMap, direction: Direction): boolean => {
+    const { x, y } = coords;
     if (direction === "Down") {
         //is map end reached
         if (BRICKS_COUNT * TILE_SIZE <= y + TILE_SIZE) {
