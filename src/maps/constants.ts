@@ -12,6 +12,6 @@ export const PLAYER_COLOR = "yellow";
 export const PLAYER_SPEED = 1;
 export const TILE_SIZE = 30;
 
-export const SCREEN_SIZE = 600;
+export const SCREEN_SIZE = 570;
 
 export const BRICKS_COUNT = SCREEN_SIZE / TILE_SIZE;
