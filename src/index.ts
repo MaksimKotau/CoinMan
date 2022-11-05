@@ -1,15 +1,17 @@
 import { level1 } from "./maps/1stLevel";
 import { BRICKS_COUNT, TILE_SIZE, WALL_ZONE } from "./maps/constants";
 import { IMap } from "./maps/IMap";
+import { Enemy } from "./renders/enemy";
 import { mapRenderer } from "./renders/mapRenderer";
-import { Direction, Player } from "./renders/player";
+import { Player } from "./renders/player";
+import { Direction } from "./renders/types/directionType";
 
 class Game {
     private canvas: HTMLCanvasElement = null;
     private ctx: CanvasRenderingContext2D = null;
     private mapData: IMap = null;
     private player: Player = null;
-
+    private enemies: Array<Enemy> = [];
     private lives: number = null;
     constructor() {
         this.canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
@@ -18,6 +20,9 @@ class Game {
         this.mapData = level1.map;
         this.player = new Player(level1.player_start_position.x, level1.player_start_position.y, this.ctx);
         document.addEventListener("keydown", this.keyDownHandler, false);
+        level1.enemies_start_position.forEach((en, index) => {
+            this.enemies.push(new Enemy(en.y, en.x, index, this.ctx))
+        })
         this.draw();
     }
     keyDownHandler = (e) => {
@@ -34,12 +39,24 @@ class Game {
     draw = () => {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         mapRenderer(this.mapData, this.ctx)
-        this.movePlayer()
+        this.movePlayer();
+        this.moveEnemies();
         this.player.render();
+        this.renderEnemies();
         requestAnimationFrame(this.draw);
     }
     movePlayer = () => {
         this.player.move(this.mapData);
+    }
+    moveEnemies = () => {
+        this.enemies.forEach(enemy => {
+            enemy.move(this.mapData)
+        })
+    }
+    renderEnemies = () => {
+        this.enemies.forEach(enemy => {
+            enemy.render()
+        })
     }
 }
 

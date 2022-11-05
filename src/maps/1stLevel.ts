@@ -25,6 +25,6 @@ const map1: Array<Array<number>> = [
 export const level1: ILevel = {
     map: map1,
     player_start_position: { x: 17, y: 17 },
-    enemies_start_position: [{ x: 1, y: 1, id: 1 }]
+    enemies_start_position: [{ x: 9, y: 9 }, { x: 9, y: 10 }, { x: 9, y: 8 }]
 }
 

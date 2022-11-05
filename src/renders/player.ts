@@ -1,8 +1,7 @@
 import { hasWallCollision } from "..";
 import { PLAYER_COLOR, PLAYER_SIZE, PLAYER_SPEED, TILE_SIZE } from "../maps/constants";
 import { IMap } from "../maps/IMap";
-
-export type Direction = "Up" | "Down" | "Left" | "Right";
+import { Direction } from "./types/directionType";
 
 export class Player {
     private x: number = null;
@@ -50,7 +49,6 @@ export class Player {
                     this.direction = this.nextTurn;
                     this.nextTurn = null;
                 } else {
-                    console.log(`Move player ${this.direction}`)
                     switch (this.direction) {
                         case "Down":
                             this.y = this.y + PLAYER_SPEED;
