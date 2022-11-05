@@ -2,7 +2,7 @@ import { hasWallCollision } from "..";
 import { ENEMY_SIZE, PLAYER_SPEED, TILE_SIZE } from "../maps/constants";
 import { IMap } from "../maps/IMap";
 import { Direction } from "./types/directionType";
-import { getRandomEnemyColor, getRandomInteger } from "./utils";
+import { getRandomEnemyColor, getRandomInteger, getReverseDirection } from "./utils";
 
 export class Enemy {
     private x: number = null;
@@ -35,7 +35,13 @@ export class Enemy {
                 directionToMove = availableDirections[getRandomInteger(1)]
             }
         } else {
-            directionToMove = availableDirections[getRandomInteger(availableDirections.length - 1)]
+            const reversDirection = getReverseDirection(this.direction)
+            if (availableDirections.includes(this.direction)) {
+                directionToMove = availableDirections
+                    .filter(el => el !== reversDirection)[getRandomInteger(availableDirections.length - 1)]
+            } else {
+                directionToMove = availableDirections[getRandomInteger(availableDirections.length - 1)]
+            }
         }
         switch (directionToMove) {
             case "Down":
