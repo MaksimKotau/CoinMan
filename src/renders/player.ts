@@ -1,4 +1,4 @@
-import { hasWallCollision } from "..";
+import { hasWallCollision } from "./utils";
 import { PLAYER_COLOR, PLAYER_SIZE, PLAYER_SPEED, TILE_SIZE } from "../maps/constants";
 import { IMap } from "../maps/IMap";
 import { Direction } from "./types/directionType";

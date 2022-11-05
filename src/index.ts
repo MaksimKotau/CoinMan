@@ -1,10 +1,9 @@
 import { level1 } from "./maps/1stLevel";
-import { BRICKS_COUNT, TILE_SIZE, WALL_ZONE } from "./maps/constants";
 import { IMap } from "./maps/IMap";
 import { Enemy } from "./renders/enemy";
 import { mapRenderer } from "./renders/mapRenderer";
 import { Player } from "./renders/player";
-import { Direction } from "./renders/types/directionType";
+import { getEnemyCollisionID } from "./renders/utils";
 
 class Game {
     private canvas: HTMLCanvasElement = null;
@@ -43,6 +42,7 @@ class Game {
         this.moveEnemies();
         this.player.render();
         this.renderEnemies();
+        this.detectEnemiesCollision()
         requestAnimationFrame(this.draw);
     }
     movePlayer = () => {
@@ -58,77 +58,14 @@ class Game {
             enemy.render()
         })
     }
-}
-
-export const hasWallCollision = (coords: { x: number, y: number }, map: IMap, direction: Direction): boolean => {
-    const { x, y } = coords;
-    if (direction === "Down") {
-        //is map end reached
-        if (BRICKS_COUNT * TILE_SIZE <= y + TILE_SIZE) {
-            return true
+    detectEnemiesCollision = () => {
+        const enemyID = getEnemyCollisionID(this.player, this.enemies)
+        if (enemyID !== null){
+            alert('collision with ' + enemyID)
         }
-        // is next row reached
-        if (y % TILE_SIZE !== 0) {
-            return false
-        }
-        const nextY = Math.trunc(y / TILE_SIZE) + 1;
-        const nextLeftX = Math.trunc(x / TILE_SIZE);
-        const nextRightX = Math.trunc((x + TILE_SIZE - 1) / TILE_SIZE);
-        const hasLeftCollision = map[nextY][nextLeftX] === WALL_ZONE;
-        const hasRightCollision = map[nextY][nextRightX] === WALL_ZONE;
-        return hasLeftCollision || hasRightCollision;
     }
-    if (direction === "Up") {
-        //is map end reached
-        if (y <= 0) {
-            return true
-        }
-        // is next row reached
-        if (y % TILE_SIZE !== 0) {
-            return false
-        }
-        const nextY = Math.trunc(y / TILE_SIZE) - 1;
-        const nextLeftX = Math.trunc(x / TILE_SIZE);
-        const nextRightX = Math.trunc((x + TILE_SIZE - 1) / TILE_SIZE);
-        const hasLeftCollision = map[nextY][nextLeftX] === WALL_ZONE;
-        const hasRightCollision = map[nextY][nextRightX] === WALL_ZONE;
-        return hasLeftCollision || hasRightCollision;
-    }
-    if (direction === "Right") {
-        //is map end reached
-        if (BRICKS_COUNT * TILE_SIZE <= x + TILE_SIZE) {
-            return true
-        }
-        // is next row reached
-        if (x % TILE_SIZE !== 0) {
-            return false
-        }
-        const nextX = Math.trunc(x / TILE_SIZE) + 1;
-        const nextTopY = Math.trunc(y / TILE_SIZE);
-        const nextBottomY = Math.trunc((y + TILE_SIZE - 1) / TILE_SIZE);
-        const hasTopCollision = map[nextTopY][nextX] === WALL_ZONE;
-        const hasBottomCollision = map[nextBottomY][nextX] === WALL_ZONE;
-        return hasTopCollision || hasBottomCollision;
-    }
-    if (direction === "Left") {
-        //is map end reached
-        if (x <= 0) {
-            return true
-        }
-        // is next row reached
-        if (x % TILE_SIZE !== 0) {
-            return false
-        }
-        const nextX = Math.trunc(x / TILE_SIZE) - 1;
-        const nextTopY = Math.trunc(y / TILE_SIZE);
-        const nextBottomY = Math.trunc((y + TILE_SIZE - 1) / TILE_SIZE);
-        const hasTopCollision = map[nextTopY][nextX] === WALL_ZONE;
-        const hasBottomCollision = map[nextBottomY][nextX] === WALL_ZONE;
-        return hasTopCollision || hasBottomCollision;
-    }
-    return false;
 }
 
 const game = new Game();
 
-export { game }
+export { game };
