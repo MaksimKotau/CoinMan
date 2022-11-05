@@ -8,6 +8,7 @@ export class Enemy {
     private x: number = null;
     private y: number = null;
     private id: number = null;
+    private color: string = null;
     private ctx: CanvasRenderingContext2D = null;
     private direction: Direction = null;
     constructor(col: number, row: number, id: number, ctx: CanvasRenderingContext2D) {
@@ -15,11 +16,12 @@ export class Enemy {
         this.id = id;
         this.x = col * TILE_SIZE;
         this.y = row * TILE_SIZE;
+        this.color = getRandomEnemyColor();
     }
     render = () => {
         this.ctx.beginPath();
         this.ctx.arc(this.x + TILE_SIZE / 2, this.y + TILE_SIZE / 2, ENEMY_SIZE / 2, 0, Math.PI * 2);
-        this.ctx.fillStyle = getRandomEnemyColor();
+        this.ctx.fillStyle = this.color;
         this.ctx.fill();
         this.ctx.closePath();
     }
