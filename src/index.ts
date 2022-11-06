@@ -1,4 +1,5 @@
 import { level1 } from "./maps/1stLevel";
+import { EMPTY_ZONE } from "./maps/constants";
 import { IMap } from "./maps/IMap";
 import { Enemy } from "./renders/enemy";
 import { mapRenderer } from "./renders/mapRenderer";
@@ -45,8 +46,11 @@ class Game {
         this.detectEnemiesCollision()
         requestAnimationFrame(this.draw);
     }
+    onEatingDot = (data: {col: number, row: number}) => {
+        this.mapData[data.row][data.col] = EMPTY_ZONE;
+    }
     movePlayer = () => {
-        this.player.move(this.mapData);
+        this.player.move(this.mapData, this.onEatingDot);
     }
     moveEnemies = () => {
         this.enemies.forEach(enemy => {

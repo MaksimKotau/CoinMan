@@ -1,5 +1,5 @@
-import { hasWallCollision } from "./utils";
-import { PLAYER_COLOR, PLAYER_SIZE, PLAYER_SPEED, TILE_SIZE } from "../maps/constants";
+import { getCellsByCoordinates, hasWallCollision } from "./utils";
+import { DOT_ZONE, PLAYER_COLOR, PLAYER_SIZE, PLAYER_SPEED, TILE_SIZE } from "../maps/constants";
 import { IMap } from "../maps/IMap";
 import { Direction } from "./types/directionType";
 
@@ -27,11 +27,10 @@ export class Player {
             (Boolean(this.nextTurn) && !hasWallCollision(this.getCoordinates(), map, this.nextTurn))
 
     }
-    move = (map: IMap) => {
+    move = (map: IMap, onEatingDot: (data: { col: number, row: number }) => void) => {
         if (this.canMove(map)) {
             if (this.isMoving && Boolean(this.direction)) {
                 if (Boolean(this.nextTurn) && this.canTurn(map)) {
-                    console.log('Try to turn')
                     switch (this.nextTurn) {
                         case "Down":
                             this.y = this.y + PLAYER_SPEED;
@@ -52,20 +51,26 @@ export class Player {
                     switch (this.direction) {
                         case "Down":
                             this.y = this.y + PLAYER_SPEED;
-                            return;
+                            break;
                         case "Up":
                             this.y = this.y - PLAYER_SPEED;
-                            return;
+                            break;
                         case "Left":
                             this.x = this.x - PLAYER_SPEED;
-                            return;
+                            break;
                         case "Right":
                             this.x = this.x + PLAYER_SPEED;
-                            return;
+                            break;
                     }
                 }
             }
         }
+        const possibleCellsWithDots = getCellsByCoordinates({ x: this.x, y: this.y })
+        possibleCellsWithDots.forEach(cell => {
+            if (map[cell.row][cell.col] === DOT_ZONE) {
+                onEatingDot(cell)
+            }
+        })
     }
     getCoordinates = () => {
         return {

@@ -109,3 +109,28 @@ export const getEnemyCollisionID = (player: Player, enemies: Array<Enemy>): numb
 export const distanceBetweenDots = (first: Coordinates, second: Coordinates): number => {
     return Math.sqrt((first.x - second.x) ** 2 + (first.y - second.y) ** 2)
 }
+
+export const getCellsByCoordinates = (coordinates: Coordinates): Array<{col: number, row: number}> => {
+    const result: Array<{col: number, row: number}> = [];
+    //leftTop
+    result.push({
+        col: Math.trunc(coordinates.x / TILE_SIZE),
+        row: Math.trunc(coordinates.y / TILE_SIZE)
+    })
+    //rightTop
+    result.push({
+        col: Math.trunc((coordinates.x + TILE_SIZE - 1) / TILE_SIZE),
+        row: Math.trunc(coordinates.y / TILE_SIZE)
+    })
+    //leftBottom
+    result.push({
+        col: Math.trunc(coordinates.x / TILE_SIZE),
+        row: Math.trunc((coordinates.y + TILE_SIZE - 1) / TILE_SIZE)
+    })
+    //rightBottom
+    result.push({
+        col: Math.trunc((coordinates.x + TILE_SIZE - 1) / TILE_SIZE),
+        row: Math.trunc((coordinates.y + TILE_SIZE - 1) / TILE_SIZE)
+    })
+    return result;
+}
