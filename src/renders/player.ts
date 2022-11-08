@@ -16,8 +16,12 @@ export class Player {
         this.y = row * TILE_SIZE;
     }
     render = () => {
+        const playerCoords = getPlayerParams(getMouthAngel(), this.direction || "Left");
         this.ctx.beginPath();
-        this.ctx.arc(this.x + TILE_SIZE / 2, this.y + TILE_SIZE / 2, PLAYER_SIZE / 2, 0, Math.PI * 2);
+        this.ctx.arc(this.x + TILE_SIZE / 2, this.y + TILE_SIZE / 2, PLAYER_SIZE / 2, playerCoords.startAngle, playerCoords.endAngle);
+        this.ctx.lineTo(this.x + TILE_SIZE / 2, this.y + TILE_SIZE / 2);
+        this.ctx.closePath();
+        this.ctx.arc(this.x + playerCoords.eyeX, this.y + playerCoords.eyeY, 3, 0, Math.PI * 2, true);
         this.ctx.fillStyle = PLAYER_COLOR;
         this.ctx.fill();
         this.ctx.closePath();
@@ -122,4 +126,45 @@ export class Player {
     private canTurn = (map: IMap) => {
         return !hasWallCollision({ x: this.x, y: this.y }, map, this.nextTurn)
     }
+}
+
+const getPlayerParams = (mouthAngle: number, direction: Direction) => {
+    const halfAngel = mouthAngle / 2;
+    const config = {
+        "Right": {
+            startAngle: 0,
+            endAngle: 360, 
+            eyeXMultiplier: 1/2,
+            eyeYMultiplier: 1/4,
+        },
+        "Left": {
+            startAngle: 180,
+            endAngle: 180, 
+            eyeXMultiplier: 1/2,
+            eyeYMultiplier: 1/4,
+        },
+        "Up": {
+            startAngle: 270,
+            endAngle: 270, 
+            eyeXMultiplier: 1/4,
+            eyeYMultiplier: 1/2,
+        },
+        "Down": {
+            startAngle: 90,
+            endAngle: 90, 
+            eyeXMultiplier: 1/4,
+            eyeYMultiplier: 1/2,
+        }
+    }
+    return {
+        startAngle: (config[direction].startAngle + halfAngel) * (Math.PI / 180),
+        endAngle: (config[direction].endAngle - halfAngel) * (Math.PI / 180),
+        eyeX: TILE_SIZE * config[direction].eyeXMultiplier,
+        eyeY: TILE_SIZE * config[direction].eyeYMultiplier,
+    };
+}
+
+const getMouthAngel = () => {
+    const milliseconds = new Date().getMilliseconds()
+    return milliseconds < 500 ? milliseconds / 10 : (1000 - milliseconds) / 10
 }
