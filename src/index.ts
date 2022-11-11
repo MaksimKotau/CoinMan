@@ -1,6 +1,7 @@
 import { Level } from "./level/level";
 import { level1 } from "./maps/1stLevel";
 import { ILevel } from "./maps/IMap";
+import { renderOnPlayerDied } from "./renders/playerDiedPopUp";
 import { GameState } from "./renders/types/gameStateType";
 
 class Game {
@@ -12,13 +13,14 @@ class Game {
   private state: GameState = null;
   private lives: number = null;
   constructor() {
-    this.state = GameState.START_NEW_GAME;
+    this.state = GameState.GAME_IN_PROGRESS;
     this.canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
     this.ctx = this.canvas.getContext("2d");
     this.ctx.fillStyle = "black";
     this.currentLevel = new Level(
       this.ctx,
-      this.levels[this.currentLevelIndex]
+      this.levels[this.currentLevelIndex],
+      this.onPlayerDied
     );
     document.addEventListener("keydown", this.keyDownHandler, false);
     this.draw();
@@ -34,10 +36,19 @@ class Game {
       this.currentLevel.handleDirectionChange("Down");
     }
   };
+  onPlayerDied = () => {
+    this.state = GameState.PLAYER_DIED;
+  };
   draw = () => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.currentLevel.move();
+    if (this.state === GameState.GAME_IN_PROGRESS) {
+      this.currentLevel.move();
+    }
     this.currentLevel.render();
+    if (this.state === GameState.PLAYER_DIED) {
+      renderOnPlayerDied(this.ctx);
+      setTimeout(() => (this.state = GameState.GAME_IN_PROGRESS), 3000);
+    }
     requestAnimationFrame(this.draw);
   };
 }

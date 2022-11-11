@@ -11,9 +11,15 @@ export class Level {
   private mapData: IMap = null;
   private player: Player = null;
   private enemies: Array<Enemy> = [];
-  constructor(ctx: CanvasRenderingContext2D, level: ILevel) {
+  private onPlayerDied: Function = null;
+  constructor(
+    ctx: CanvasRenderingContext2D,
+    level: ILevel,
+    onPlayerDied: () => void
+  ) {
     this.mapData = level.map;
     this.ctx = ctx;
+    this.onPlayerDied = onPlayerDied;
     this.player = new Player(
       level.player_start_position.x,
       level.player_start_position.y,
@@ -46,7 +52,7 @@ export class Level {
   detectEnemiesCollision = () => {
     const enemyID = getEnemyCollisionID(this.player, this.enemies);
     if (enemyID !== null) {
-      alert("collision with " + enemyID);
+      this.onPlayerDied();
     }
   };
 }
