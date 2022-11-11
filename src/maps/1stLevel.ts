@@ -1,4 +1,4 @@
-import { ILevel } from "./IMap";
+import { ILevel } from './IMap';
 
 const map1: Array<Array<number>> = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -19,7 +19,7 @@ const map1: Array<Array<number>> = [
   [1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1],
   [1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1],
   [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
 export const level1: ILevel = {
@@ -28,6 +28,6 @@ export const level1: ILevel = {
   enemies_start_position: [
     { x: 9, y: 9 },
     { x: 9, y: 10 },
-    { x: 9, y: 8 },
-  ],
+    { x: 9, y: 8 }
+  ]
 };

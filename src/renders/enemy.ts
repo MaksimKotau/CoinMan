@@ -1,12 +1,12 @@
-import { hasWallCollision } from "./utils";
-import { ENEMY_SIZE, PLAYER_SPEED, TILE_SIZE } from "../maps/constants";
-import { IMap } from "../maps/IMap";
-import { Direction } from "./types/directionType";
+import { hasWallCollision } from './utils';
+import { ENEMY_SIZE, PLAYER_SPEED, TILE_SIZE } from '../maps/constants';
+import { IMap } from '../maps/IMap';
+import { Direction } from './types/directionType';
 import {
   getRandomEnemyColor,
   getRandomInteger,
-  getReverseDirection,
-} from "./utils";
+  getReverseDirection
+} from './utils';
 
 export class Enemy {
   private x: number = null;
@@ -63,23 +63,23 @@ export class Enemy {
       }
     }
     switch (directionToMove) {
-      case "Down":
+      case 'Down':
         this.y = this.y + PLAYER_SPEED;
         break;
-      case "Left":
+      case 'Left':
         this.x = this.x - PLAYER_SPEED;
         break;
-      case "Right":
+      case 'Right':
         this.x = this.x + PLAYER_SPEED;
         break;
-      case "Up":
+      case 'Up':
         this.y = this.y - PLAYER_SPEED;
         break;
     }
     this.direction = directionToMove;
   };
   private getAvailableDirections = (map: IMap): Array<Direction> => {
-    const allDirections: Array<Direction> = ["Up", "Down", "Left", "Right"];
+    const allDirections: Array<Direction> = ['Up', 'Down', 'Left', 'Right'];
     return allDirections.filter((el: Direction) =>
       this.canTurnToDirection(map, el)
     );
@@ -90,7 +90,7 @@ export class Enemy {
   getCoordinates = () => {
     return {
       x: this.x,
-      y: this.y,
+      y: this.y
     };
   };
   getDirection = (): Direction => {

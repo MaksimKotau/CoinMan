@@ -1,13 +1,13 @@
-import { getCellsByCoordinates, hasWallCollision } from "./utils";
+import { getCellsByCoordinates, hasWallCollision } from './utils';
 import {
   DOT_ZONE,
   PLAYER_COLOR,
   PLAYER_SIZE,
   PLAYER_SPEED,
-  TILE_SIZE,
-} from "../maps/constants";
-import { IMap } from "../maps/IMap";
-import { Direction } from "./types/directionType";
+  TILE_SIZE
+} from '../maps/constants';
+import { IMap } from '../maps/IMap';
+import { Direction } from './types/directionType';
 
 export class Player {
   private x: number = null;
@@ -24,7 +24,7 @@ export class Player {
   render = () => {
     const playerCoords = getPlayerParams(
       getMouthAngel(),
-      this.direction || "Left"
+      this.direction || 'Left'
     );
     this.ctx.beginPath();
     this.ctx.arc(
@@ -63,16 +63,16 @@ export class Player {
       if (this.isMoving && Boolean(this.direction)) {
         if (Boolean(this.nextTurn) && this.canTurn(map)) {
           switch (this.nextTurn) {
-            case "Down":
+            case 'Down':
               this.y = this.y + PLAYER_SPEED;
               break;
-            case "Left":
+            case 'Left':
               this.x = this.x - PLAYER_SPEED;
               break;
-            case "Right":
+            case 'Right':
               this.x = this.x + PLAYER_SPEED;
               break;
-            case "Up":
+            case 'Up':
               this.y = this.y - PLAYER_SPEED;
               break;
           }
@@ -80,16 +80,16 @@ export class Player {
           this.nextTurn = null;
         } else {
           switch (this.direction) {
-            case "Down":
+            case 'Down':
               this.y = this.y + PLAYER_SPEED;
               break;
-            case "Up":
+            case 'Up':
               this.y = this.y - PLAYER_SPEED;
               break;
-            case "Left":
+            case 'Left':
               this.x = this.x - PLAYER_SPEED;
               break;
-            case "Right":
+            case 'Right':
               this.x = this.x + PLAYER_SPEED;
               break;
           }
@@ -98,7 +98,7 @@ export class Player {
     }
     const possibleCellsWithDots = getCellsByCoordinates({
       x: this.x,
-      y: this.y,
+      y: this.y
     });
     possibleCellsWithDots.forEach((cell) => {
       if (map[cell.row][cell.col] === DOT_ZONE) {
@@ -109,7 +109,7 @@ export class Player {
   getCoordinates = () => {
     return {
       x: this.x,
-      y: this.y,
+      y: this.y
     };
   };
   getDirection = () => {
@@ -122,36 +122,33 @@ export class Player {
     return this.nextTurn;
   };
   handleDirectionChange = (direction: Direction) => {
-    console.log(
-      `Is moving: ${this.isMoving}, Direction: ${this.direction}, turn: ${this.nextTurn}`
-    );
-    if (direction === "Right") {
-      if (Boolean(this.direction)) {
-        this.nextTurn = "Right";
+    if (direction === 'Right') {
+      if (this.direction) {
+        this.nextTurn = 'Right';
       } else {
         this.isMoving = true;
-        this.direction = "Right";
+        this.direction = 'Right';
       }
-    } else if (direction === "Left") {
-      if (Boolean(this.direction)) {
-        this.nextTurn = "Left";
+    } else if (direction === 'Left') {
+      if (this.direction) {
+        this.nextTurn = 'Left';
       } else {
         this.isMoving = true;
-        this.direction = "Left";
+        this.direction = 'Left';
       }
-    } else if (direction === "Up") {
-      if (Boolean(this.direction)) {
-        this.nextTurn = "Up";
+    } else if (direction === 'Up') {
+      if (this.direction) {
+        this.nextTurn = 'Up';
       } else {
         this.isMoving = true;
-        this.direction = "Up";
+        this.direction = 'Up';
       }
-    } else if (direction === "Down") {
-      if (Boolean(this.direction)) {
-        this.nextTurn = "Down";
+    } else if (direction === 'Down') {
+      if (this.direction) {
+        this.nextTurn = 'Down';
       } else {
         this.isMoving = true;
-        this.direction = "Down";
+        this.direction = 'Down';
       }
     }
   };
@@ -167,32 +164,32 @@ const getPlayerParams = (mouthAngle: number, direction: Direction) => {
       startAngle: 0,
       endAngle: 360,
       eyeXMultiplier: 1 / 2,
-      eyeYMultiplier: 1 / 4,
+      eyeYMultiplier: 1 / 4
     },
     Left: {
       startAngle: 180,
       endAngle: 180,
       eyeXMultiplier: 1 / 2,
-      eyeYMultiplier: 1 / 4,
+      eyeYMultiplier: 1 / 4
     },
     Up: {
       startAngle: 270,
       endAngle: 270,
       eyeXMultiplier: 1 / 4,
-      eyeYMultiplier: 1 / 2,
+      eyeYMultiplier: 1 / 2
     },
     Down: {
       startAngle: 90,
       endAngle: 90,
       eyeXMultiplier: 1 / 4,
-      eyeYMultiplier: 1 / 2,
-    },
+      eyeYMultiplier: 1 / 2
+    }
   };
   return {
     startAngle: (config[direction].startAngle + halfAngel) * (Math.PI / 180),
     endAngle: (config[direction].endAngle - halfAngel) * (Math.PI / 180),
     eyeX: TILE_SIZE * config[direction].eyeXMultiplier,
-    eyeY: TILE_SIZE * config[direction].eyeYMultiplier,
+    eyeY: TILE_SIZE * config[direction].eyeYMultiplier
   };
 };
 

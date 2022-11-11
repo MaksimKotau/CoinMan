@@ -1,39 +1,39 @@
-import { Level } from "./level/level";
-import { level1 } from "./maps/1stLevel";
-import { ILevel } from "./maps/IMap";
-import { renderOnPlayerDied } from "./renders/playerDiedPopUp";
-import { GameState } from "./renders/types/gameStateType";
+import { Level } from './level/level';
+import { level1 } from './maps/1stLevel';
+import { ILevel } from './maps/IMap';
+import { renderOnPlayerDied } from './renders/playerDiedPopUp';
+import { GameState } from './renders/types/gameStateType';
 
 class Game {
   private canvas: HTMLCanvasElement = null;
   private ctx: CanvasRenderingContext2D = null;
   private levels: Array<ILevel> = [level1];
-  private currentLevelIndex: number = 0;
+  private currentLevelIndex = 0;
   private currentLevel: Level = null;
   private state: GameState = null;
   private lives: number = null;
   constructor() {
     this.state = GameState.GAME_IN_PROGRESS;
-    this.canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
-    this.ctx = this.canvas.getContext("2d");
-    this.ctx.fillStyle = "black";
+    this.canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
+    this.ctx = this.canvas.getContext('2d');
+    this.ctx.fillStyle = 'black';
     this.currentLevel = new Level(
       this.ctx,
       this.levels[this.currentLevelIndex],
       this.onPlayerDied
     );
-    document.addEventListener("keydown", this.keyDownHandler, false);
+    document.addEventListener('keydown', this.keyDownHandler, false);
     this.draw();
   }
   keyDownHandler = (e) => {
     if (e.keyCode === 39) {
-      this.currentLevel.handleDirectionChange("Right");
+      this.currentLevel.handleDirectionChange('Right');
     } else if (e.keyCode === 37) {
-      this.currentLevel.handleDirectionChange("Left");
+      this.currentLevel.handleDirectionChange('Left');
     } else if (e.keyCode === 38) {
-      this.currentLevel.handleDirectionChange("Up");
+      this.currentLevel.handleDirectionChange('Up');
     } else if (e.keyCode === 40) {
-      this.currentLevel.handleDirectionChange("Down");
+      this.currentLevel.handleDirectionChange('Down');
     }
   };
   onPlayerDied = () => {

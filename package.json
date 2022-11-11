@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "open-game-html": "open-cli index.html",
-    "lint": "npx eslint src test",
+    "lint": "npx eslint src",
     "lint:fix": "npm run lint -- --fix",
-    "prettier": "npx prettier src test --check",
+    "prettier": "npx prettier src --check",
     "prettier:fix": "npm run prettier -- --write",
     "format": "npm run prettier:fix && npm run lint:fix",
     "build": "webpack",
@@ -20,9 +20,11 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.1",
     "open-cli": "^7.1.0",
     "prettier": "2.7.1",

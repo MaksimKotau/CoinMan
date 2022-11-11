@@ -4,10 +4,17 @@
         "commonjs": true,
         "es2021": true
     },
-    "extends": [
-        "standard-with-typescript",
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint",
         "prettier"
-    ],
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+      ],
     "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -15,5 +22,8 @@
             "./tsconfig.json"
         ]
     },
-    "rules": {}
+    "rules": {
+        "no-console": 1,       // Means warning
+        "prettier/prettier": 2 // Means error
+      }
 }

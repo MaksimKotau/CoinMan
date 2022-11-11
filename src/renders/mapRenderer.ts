@@ -5,9 +5,9 @@ import {
   DOT_ZONE,
   TILE_SIZE,
   WALL_COLOR,
-  WALL_ZONE,
-} from "../maps/constants";
-import { IMap } from "../maps/IMap";
+  WALL_ZONE
+} from '../maps/constants';
+import { IMap } from '../maps/IMap';
 
 export const renderMap = (mapData: IMap, ctx: CanvasRenderingContext2D) => {
   for (let row = 0; row < BRICKS_COUNT; row++) {

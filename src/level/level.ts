@@ -1,17 +1,17 @@
-import { EMPTY_ZONE } from "../maps/constants";
-import { ILevel, IMap } from "../maps/IMap";
-import { Enemy } from "../renders/enemy";
-import { renderMap } from "../renders/mapRenderer";
-import { Player } from "../renders/player";
-import { Direction } from "../renders/types/directionType";
-import { getEnemyCollisionID } from "../renders/utils";
+import { EMPTY_ZONE } from '../maps/constants';
+import { ILevel, IMap } from '../maps/IMap';
+import { Enemy } from '../renders/enemy';
+import { renderMap } from '../renders/mapRenderer';
+import { Player } from '../renders/player';
+import { Direction } from '../renders/types/directionType';
+import { getEnemyCollisionID } from '../renders/utils';
 
 export class Level {
   private ctx: CanvasRenderingContext2D = null;
   private mapData: IMap = null;
   private player: Player = null;
   private enemies: Array<Enemy> = [];
-  private onPlayerDied: Function = null;
+  private onPlayerDied: () => void = null;
   constructor(
     ctx: CanvasRenderingContext2D,
     level: ILevel,
