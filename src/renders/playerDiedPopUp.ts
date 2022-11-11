@@ -1,12 +1,16 @@
 export const renderOnPlayerDied = (ctx: CanvasRenderingContext2D) => {
   ctx.beginPath();
-  ctx.rect(100, 200, 400, 200);
+  ctx.rect(70, 185, 430, 200);
   ctx.fillStyle = 'purple';
+  ctx.shadowColor = 'black';
+  ctx.shadowBlur = 50;
   ctx.fill();
-  ctx.font = 'bold 24px verdana, sans-serif ';
-  ctx.textAlign = 'start';
-  ctx.textBaseline = 'bottom';
+  ctx.shadowColor = 'none';
+  ctx.shadowBlur = 0;
+  ctx.font = 'bold 24px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText('Player Died', 250, 300);
+  ctx.fillText('Player Died', 285, 285);
   ctx.closePath();
 };
