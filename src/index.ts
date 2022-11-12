@@ -11,7 +11,8 @@ class Game {
   private currentLevelIndex = 0;
   private currentLevel: Level = null;
   private state: GameState = null;
-  private lives: number = null;
+  private lives: number = 3;
+  private scores: number = 0;
   constructor() {
     this.state = GameState.GAME_IN_PROGRESS;
     this.canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
@@ -37,7 +38,14 @@ class Game {
     }
   };
   onPlayerDied = () => {
-    this.state = GameState.PLAYER_DIED;
+    if (this.lives === 1) {
+      this.lives = 0;
+      this.state = GameState.GAME_OVER
+    } else {
+      this.lives--
+      this.state = GameState.PLAYER_DIED;
+      this.currentLevel.resetAfterPlayerDie()
+    }
   };
   draw = () => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -46,7 +54,7 @@ class Game {
     }
     this.currentLevel.render();
     if (this.state === GameState.PLAYER_DIED) {
-      renderOnPlayerDied(this.ctx);
+      renderOnPlayerDied(this.ctx, this.lives);
       setTimeout(() => (this.state = GameState.GAME_IN_PROGRESS), 3000);
     }
     requestAnimationFrame(this.draw);

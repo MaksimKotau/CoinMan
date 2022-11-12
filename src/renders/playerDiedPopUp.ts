@@ -1,7 +1,7 @@
-export const renderOnPlayerDied = (ctx: CanvasRenderingContext2D) => {
+export const renderOnPlayerDied = (ctx: CanvasRenderingContext2D, lives: number) => {
   ctx.beginPath();
   ctx.rect(70, 185, 430, 200);
-  ctx.fillStyle = 'purple';
+  ctx.fillStyle = 'red';
   ctx.shadowColor = 'black';
   ctx.shadowBlur = 50;
   ctx.fill();
@@ -11,6 +11,7 @@ export const renderOnPlayerDied = (ctx: CanvasRenderingContext2D) => {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText('Player Died', 285, 285);
+  ctx.fillText('Player Died', 285, 270);
+  ctx.fillText(`${lives} lives left`, 285, 300)
   ctx.closePath();
 };

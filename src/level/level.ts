@@ -12,13 +12,15 @@ export class Level {
   private player: Player = null;
   private enemies: Array<Enemy> = [];
   private onPlayerDied: () => void = null;
+  private level: ILevel = null;
   constructor(
     ctx: CanvasRenderingContext2D,
     level: ILevel,
-    onPlayerDied: () => void
+    onPlayerDied: () => void,
   ) {
     this.mapData = level.map;
     this.ctx = ctx;
+    this.level = level;
     this.onPlayerDied = onPlayerDied;
     this.player = new Player(
       level.player_start_position.x,
@@ -55,4 +57,15 @@ export class Level {
       this.onPlayerDied();
     }
   };
+  resetAfterPlayerDie = () => {
+    this.player = new Player(
+      this.level.player_start_position.x,
+      this.level.player_start_position.y,
+      this.ctx
+    );
+    this.enemies = [];
+    this.level.enemies_start_position.forEach((en, index) => {
+      this.enemies.push(new Enemy(en.y, en.x, index, this.ctx));
+    });
+  }
 }
