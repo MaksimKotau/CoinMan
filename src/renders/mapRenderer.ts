@@ -8,8 +8,10 @@ import {
   WALL_ZONE
 } from '../maps/constants';
 import { IMap } from '../maps/IMap';
+import Context from '../context';
 
-export const renderMap = (mapData: IMap, ctx: CanvasRenderingContext2D) => {
+export const renderMap = (mapData: IMap) => {
+  const ctx = Context.get().graphicContext;
   for (let row = 0; row < BRICKS_COUNT; row++) {
     for (let col = 0; col < BRICKS_COUNT; col++) {
       if (mapData[row][col] === WALL_ZONE) {

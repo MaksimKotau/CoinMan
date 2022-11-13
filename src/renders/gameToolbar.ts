@@ -1,10 +1,8 @@
 import { SCREEN_SIZE, TILE_SIZE, TOOLBAR_HEIGHT } from '../maps/constants';
+import Context from '../context';
 
-export const renderGameToolbar = (
-  ctx: CanvasRenderingContext2D,
-  lives: number,
-  scores: number
-) => {
+export const renderGameToolbar = () => {
+  const { lives, scores, graphicContext: ctx } = Context.get();
   ctx.beginPath();
   ctx.rect(0, SCREEN_SIZE, SCREEN_SIZE, TOOLBAR_HEIGHT);
   ctx.strokeStyle = 'grey';

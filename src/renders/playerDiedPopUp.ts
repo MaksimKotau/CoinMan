@@ -1,7 +1,7 @@
-export const renderOnPlayerDied = (
-  ctx: CanvasRenderingContext2D,
-  lives: number
-) => {
+import Context from '../context';
+
+export const renderOnPlayerDied = () => {
+  const { graphicContext: ctx, lives } = Context.get();
   ctx.beginPath();
   ctx.rect(70, 185, 430, 200);
   ctx.fillStyle = 'red';

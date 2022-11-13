@@ -8,35 +8,35 @@ import {
 } from '../maps/constants';
 import { IMap } from '../maps/IMap';
 import { Direction } from './types/directionType';
+import Context from '../context';
 
 export class Player {
   private x: number = null;
   private y: number = null;
-  private ctx: CanvasRenderingContext2D = null;
   private isMoving = false;
   private direction: Direction | null = null;
   private nextTurn: Direction | null = null;
-  constructor(col: number, row: number, ctx: CanvasRenderingContext2D) {
-    this.ctx = ctx;
+  constructor(col: number, row: number) {
     this.x = col * TILE_SIZE;
     this.y = row * TILE_SIZE;
   }
   render = () => {
+    const ctx = Context.get().graphicContext;
     const playerCoords = getPlayerDrawParams(
       getMouthAngel(),
       this.direction || 'Left'
     );
-    this.ctx.beginPath();
-    this.ctx.arc(
+    ctx.beginPath();
+    ctx.arc(
       this.x + TILE_SIZE / 2,
       this.y + TILE_SIZE / 2,
       PLAYER_SIZE / 2,
       playerCoords.startAngle,
       playerCoords.endAngle
     );
-    this.ctx.lineTo(this.x + TILE_SIZE / 2, this.y + TILE_SIZE / 2);
-    this.ctx.closePath();
-    this.ctx.arc(
+    ctx.lineTo(this.x + TILE_SIZE / 2, this.y + TILE_SIZE / 2);
+    ctx.closePath();
+    ctx.arc(
       this.x + playerCoords.eyeX,
       this.y + playerCoords.eyeY,
       3,
@@ -44,9 +44,9 @@ export class Player {
       Math.PI * 2,
       true
     );
-    this.ctx.fillStyle = PLAYER_COLOR;
-    this.ctx.fill();
-    this.ctx.closePath();
+    ctx.fillStyle = PLAYER_COLOR;
+    ctx.fill();
+    ctx.closePath();
   };
   private canMove = (map: IMap) => {
     return (
