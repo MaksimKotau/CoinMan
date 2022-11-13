@@ -12,16 +12,19 @@ export class Level {
   private player: Player = null;
   private enemies: Array<Enemy> = [];
   private onPlayerDied: () => void = null;
+  private onEarningPoints: (points: number) => void = null;
   private level: ILevel = null;
   constructor(
     ctx: CanvasRenderingContext2D,
     level: ILevel,
     onPlayerDied: () => void,
+    onEarningPoints: (points: number) => void
   ) {
     this.mapData = level.map;
     this.ctx = ctx;
     this.level = level;
     this.onPlayerDied = onPlayerDied;
+    this.onEarningPoints = onEarningPoints;
     this.player = new Player(
       level.player_start_position.x,
       level.player_start_position.y,
@@ -42,6 +45,7 @@ export class Level {
     });
   };
   onEatingDot = (data: { col: number; row: number }) => {
+    this.onEarningPoints(1);
     this.mapData[data.row][data.col] = EMPTY_ZONE;
   };
   move = () => {

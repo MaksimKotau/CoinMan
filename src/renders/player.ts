@@ -22,7 +22,7 @@ export class Player {
     this.y = row * TILE_SIZE;
   }
   render = () => {
-    const playerCoords = getPlayerParams(
+    const playerCoords = getPlayerDrawParams(
       getMouthAngel(),
       this.direction || 'Left'
     );
@@ -157,7 +157,7 @@ export class Player {
   };
 }
 
-const getPlayerParams = (mouthAngle: number, direction: Direction) => {
+const getPlayerDrawParams = (mouthAngle: number, direction: Direction) => {
   const halfAngel = mouthAngle / 2;
   const config = {
     Right: {

@@ -21,7 +21,8 @@ class Game {
     this.currentLevel = new Level(
       this.ctx,
       this.levels[this.currentLevelIndex],
-      this.onPlayerDied
+      this.onPlayerDied,
+      this.onEarningPoints
     );
     document.addEventListener('keydown', this.keyDownHandler, false);
     this.draw();
@@ -47,6 +48,9 @@ class Game {
       this.currentLevel.resetAfterPlayerDie()
     }
   };
+  onEarningPoints = (points: number) => {
+    this.scores = this.scores + points;
+  }
   draw = () => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     if (this.state === GameState.GAME_IN_PROGRESS) {
