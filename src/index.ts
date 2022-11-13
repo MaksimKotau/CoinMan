@@ -1,6 +1,7 @@
 import { Level } from './level/level';
 import { level1 } from './maps/1stLevel';
 import { ILevel } from './maps/IMap';
+import { renderGameToolbar } from './renders/gameToolbar';
 import { renderOnPlayerDied } from './renders/playerDiedPopUp';
 import { GameState } from './renders/types/gameStateType';
 
@@ -11,8 +12,8 @@ class Game {
   private currentLevelIndex = 0;
   private currentLevel: Level = null;
   private state: GameState = null;
-  private lives: number = 3;
-  private scores: number = 0;
+  private lives = 3;
+  private scores = 0;
   constructor() {
     this.state = GameState.GAME_IN_PROGRESS;
     this.canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
@@ -41,22 +42,23 @@ class Game {
   onPlayerDied = () => {
     if (this.lives === 1) {
       this.lives = 0;
-      this.state = GameState.GAME_OVER
+      this.state = GameState.GAME_OVER;
     } else {
-      this.lives--
+      this.lives--;
       this.state = GameState.PLAYER_DIED;
-      this.currentLevel.resetAfterPlayerDie()
+      this.currentLevel.resetAfterPlayerDie();
     }
   };
   onEarningPoints = (points: number) => {
     this.scores = this.scores + points;
-  }
+  };
   draw = () => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     if (this.state === GameState.GAME_IN_PROGRESS) {
       this.currentLevel.move();
     }
     this.currentLevel.render();
+    renderGameToolbar(this.ctx, this.lives, this.scores);
     if (this.state === GameState.PLAYER_DIED) {
       renderOnPlayerDied(this.ctx, this.lives);
       setTimeout(() => (this.state = GameState.GAME_IN_PROGRESS), 3000);

@@ -12,6 +12,6 @@ export const renderOnLevelCompleted = (ctx: CanvasRenderingContext2D) => {
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#ffffff';
   ctx.fillText('CONGRATULATIONS!!!', 285, 270);
-  ctx.fillText(`LEVEL COMPLETED!!!`, 285, 300)
+  ctx.fillText(`LEVEL COMPLETED!!!`, 285, 300);
   ctx.closePath();
 };
