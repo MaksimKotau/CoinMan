@@ -19,3 +19,4 @@ export const SCREEN_SIZE = 570;
 export const BRICKS_COUNT = SCREEN_SIZE / TILE_SIZE;
 
 export const COLLISION_DISTANCE = 20;
+export const TOOLBAR_HEIGHT = 30;

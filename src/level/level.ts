@@ -71,5 +71,5 @@ export class Level {
     this.level.enemies_start_position.forEach((en, index) => {
       this.enemies.push(new Enemy(en.y, en.x, index, this.ctx));
     });
-  }
+  };
 }
