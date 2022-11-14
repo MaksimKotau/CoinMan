@@ -2,7 +2,7 @@ import Context from '../context';
 import { SCREEN_SIZE } from '../maps/constants';
 import { GameState } from './types/gameStateType';
 
-export const renderGameStart = () => {
+export const renderGameStart = (startGame: () => void) => {
   const ctx = Context.get().graphicContext;
   const actionsBar = document.getElementById('actions');
   if (!document.getElementById('start_button')) {
@@ -10,7 +10,7 @@ export const renderGameStart = () => {
     buttonStart.innerText = 'START';
     buttonStart.id = 'start_button';
     buttonStart.onclick = () => {
-      Context.set({ gameState: GameState.GAME_IN_PROGRESS });
+      startGame();
       document.getElementById('start_button').remove();
     };
     actionsBar.appendChild(buttonStart);

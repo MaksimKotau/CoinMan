@@ -1,10 +1,12 @@
 import { GameState } from '../renders/types/gameStateType';
+import { LevelState } from '../renders/types/levelStateType';
 
 export interface IGameContext {
   graphicContext: CanvasRenderingContext2D;
   lives: number;
   scores: number;
   gameState: GameState;
+  levelState: LevelState;
   levelIndex: number;
 }
 

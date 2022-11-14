@@ -6,6 +6,7 @@ import { renderGameOver } from './renders/gameOverRenderer';
 import { renderGameToolbar } from './renders/gameToolbar';
 import { renderGameStart } from './renders/newGameRenderer';
 import { GameState } from './renders/types/gameStateType';
+import { LevelState } from './renders/types/levelStateType';
 
 class Game {
   private canvas: HTMLCanvasElement = null;
@@ -16,6 +17,7 @@ class Game {
     const ctx = this.canvas.getContext('2d');
     Context.initContext({
       gameState: GameState.GAME_NOT_STARTED,
+      levelState: LevelState.LEVEL_NOT_STARTED,
       graphicContext: ctx,
       lives: 3,
       scores: 0,
@@ -48,12 +50,16 @@ class Game {
       this.currentLevel.move();
       this.currentLevel.render();
     } else if (Context.get().gameState === GameState.GAME_NOT_STARTED) {
-      renderGameStart();
+      renderGameStart(this.startGame);
     } else if (Context.get().gameState === GameState.GAME_OVER) {
       renderGameOver();
     }
     renderGameToolbar();
     requestAnimationFrame(this.draw);
+  };
+  startGame = () => {
+    Context.set({ gameState: GameState.GAME_IN_PROGRESS });
+    this.currentLevel.startLevel();
   };
 }
 

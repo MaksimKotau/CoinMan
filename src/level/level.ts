@@ -17,11 +17,9 @@ export class Level {
   private enemies: Array<Enemy> = [];
   private onEarningPoints: (points: number) => void = null;
   private level: ILevel = null;
-  private levelState: LevelState;
   constructor(level: ILevel, onEarningPoints: (points: number) => void) {
     this.mapData = level.map;
     this.level = level;
-    this.levelState = LevelState.LEVEL_NOT_STARTED;
     this.onEarningPoints = onEarningPoints;
     this.player = new Player(
       level.player_start_position.x,
@@ -30,24 +28,27 @@ export class Level {
     level.enemies_start_position.forEach((en, index) => {
       this.enemies.push(new Enemy(en.y, en.x, index));
     });
-    this.startLevel();
   }
   handleDirectionChange = (direction: Direction) => {
     this.player.handleDirectionChange(direction);
   };
   startLevel = () => {
-    setTimeout(() => (this.levelState = LevelState.LEVEL_IN_PROGRESS), 3000);
+    setTimeout(
+      () => Context.set({ levelState: LevelState.LEVEL_IN_PROGRESS }),
+      3000
+    );
   };
   render = () => {
+    const { levelState } = Context.get();
     renderMap(this.mapData);
     this.player.render();
     this.enemies.forEach((enemy) => {
       enemy.render();
     });
-    if (this.levelState === LevelState.LEVEL_NOT_STARTED) {
+    if (levelState === LevelState.LEVEL_NOT_STARTED) {
       renderStartNewLevel();
     }
-    if (this.levelState === LevelState.PLAYER_DIED) {
+    if (levelState === LevelState.PLAYER_DIED) {
       renderOnPlayerDied();
     }
   };
@@ -56,7 +57,7 @@ export class Level {
     this.mapData[data.row][data.col] = EMPTY_ZONE;
   };
   move = () => {
-    if (this.levelState === LevelState.LEVEL_IN_PROGRESS) {
+    if (Context.get().levelState === LevelState.LEVEL_IN_PROGRESS) {
       this.player.move(this.mapData, this.onEatingDot);
       this.enemies.forEach((enemy) => {
         enemy.move(this.mapData);
@@ -71,9 +72,9 @@ export class Level {
       Context.set({ lives: --lives });
       if (Context.get().lives > 0) {
         this.resetAfterPlayerDie();
-        this.levelState = LevelState.PLAYER_DIED;
+        Context.set({ levelState: LevelState.PLAYER_DIED });
         setTimeout(
-          () => (this.levelState = LevelState.LEVEL_IN_PROGRESS),
+          () => Context.set({ levelState: LevelState.LEVEL_IN_PROGRESS }),
           3000
         );
       } else {
