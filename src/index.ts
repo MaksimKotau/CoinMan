@@ -1,6 +1,7 @@
 import Context from './context';
 import { Level } from './level/level';
-import { level1 } from './maps/1stLevel';
+import { level1 } from './maps/level_1';
+import { level2 } from './maps/level_2';
 import { ILevel } from './maps/IMap';
 import { renderGameOver } from './renders/gameOverRenderer';
 import { renderGameToolbar } from './renders/gameToolbar';
@@ -10,7 +11,7 @@ import { LevelState } from './renders/types/levelStateType';
 
 class Game {
   private canvas: HTMLCanvasElement = null;
-  private levels: Array<ILevel> = [level1];
+  private levels: Array<ILevel> = [level1, level2];
   private currentLevel: Level = null;
   constructor() {
     this.canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
