@@ -2,6 +2,7 @@ import Context from './context';
 import { Level } from './level/level';
 import { level1 } from './maps/1stLevel';
 import { ILevel } from './maps/IMap';
+import { renderGameOver } from './renders/gameOverRenderer';
 import { renderGameToolbar } from './renders/gameToolbar';
 import { renderGameStart } from './renders/newGameRenderer';
 import { GameState } from './renders/types/gameStateType';
@@ -21,11 +22,7 @@ class Game {
       levelIndex: 0
     });
     ctx.fillStyle = 'black';
-    this.currentLevel = new Level(
-      this.levels[0],
-      this.onPlayerDied,
-      this.onEarningPoints
-    );
+    this.currentLevel = new Level(this.levels[0], this.onEarningPoints);
     document.addEventListener('keydown', this.keyDownHandler, false);
     this.draw();
   }
@@ -40,13 +37,6 @@ class Game {
       this.currentLevel.handleDirectionChange('Down');
     }
   };
-  onPlayerDied = () => {
-    const lives = Context.get().lives;
-    Context.set({ lives: lives - 1 });
-    if (Context.get().lives === 0) {
-      Context.set({ gameState: GameState.GAME_OVER });
-    }
-  };
   onEarningPoints = (points: number) => {
     const scores = Context.get().scores;
     Context.set({ scores: points + scores });
@@ -54,11 +44,13 @@ class Game {
   draw = () => {
     const ctx = Context.get().graphicContext;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    if (Context.get().gameState === GameState.GAME_NOT_STARTED) {
-      renderGameStart()
-    }else if (Context.get().gameState === GameState.GAME_IN_PROGRESS) {
+    if (Context.get().gameState === GameState.GAME_IN_PROGRESS) {
       this.currentLevel.move();
       this.currentLevel.render();
+    } else if (Context.get().gameState === GameState.GAME_NOT_STARTED) {
+      renderGameStart();
+    } else if (Context.get().gameState === GameState.GAME_OVER) {
+      renderGameOver();
     }
     renderGameToolbar();
     requestAnimationFrame(this.draw);

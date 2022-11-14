@@ -1,3 +1,4 @@
+import Context from '../context';
 import { EMPTY_ZONE } from '../maps/constants';
 import { ILevel, IMap } from '../maps/IMap';
 import { Enemy } from '../renders/enemy';
@@ -6,6 +7,7 @@ import { Player } from '../renders/player';
 import { renderOnPlayerDied } from '../renders/playerDiedPopUp';
 import { renderStartNewLevel } from '../renders/startNewLevelRenderer';
 import { Direction } from '../renders/types/directionType';
+import { GameState } from '../renders/types/gameStateType';
 import { LevelState } from '../renders/types/levelStateType';
 import { getEnemyCollisionID } from '../renders/utils';
 
@@ -13,19 +15,13 @@ export class Level {
   private mapData: IMap = null;
   private player: Player = null;
   private enemies: Array<Enemy> = [];
-  private onPlayerDied: () => void = null;
   private onEarningPoints: (points: number) => void = null;
   private level: ILevel = null;
   private levelState: LevelState;
-  constructor(
-    level: ILevel,
-    onPlayerDied: () => void,
-    onEarningPoints: (points: number) => void
-  ) {
+  constructor(level: ILevel, onEarningPoints: (points: number) => void) {
     this.mapData = level.map;
     this.level = level;
     this.levelState = LevelState.LEVEL_NOT_STARTED;
-    this.onPlayerDied = onPlayerDied;
     this.onEarningPoints = onEarningPoints;
     this.player = new Player(
       level.player_start_position.x,
@@ -34,28 +30,26 @@ export class Level {
     level.enemies_start_position.forEach((en, index) => {
       this.enemies.push(new Enemy(en.y, en.x, index));
     });
-    this.startLevel()
+    this.startLevel();
   }
   handleDirectionChange = (direction: Direction) => {
     this.player.handleDirectionChange(direction);
   };
   startLevel = () => {
     setTimeout(() => (this.levelState = LevelState.LEVEL_IN_PROGRESS), 3000);
-  }
+  };
   render = () => {
     renderMap(this.mapData);
-    if (this.levelState === LevelState.LEVEL_NOT_STARTED){
-      renderStartNewLevel()
-    }
-    if (this.levelState === LevelState.PLAYER_DIED) {
-      renderOnPlayerDied();
-      setTimeout(() => (this.levelState = LevelState.LEVEL_IN_PROGRESS), 3000);
-    }
-    
     this.player.render();
     this.enemies.forEach((enemy) => {
       enemy.render();
     });
+    if (this.levelState === LevelState.LEVEL_NOT_STARTED) {
+      renderStartNewLevel();
+    }
+    if (this.levelState === LevelState.PLAYER_DIED) {
+      renderOnPlayerDied();
+    }
   };
   onEatingDot = (data: { col: number; row: number }) => {
     this.onEarningPoints(1);
@@ -73,7 +67,18 @@ export class Level {
   detectEnemiesCollision = () => {
     const enemyID = getEnemyCollisionID(this.player, this.enemies);
     if (enemyID !== null) {
-      this.resetAfterPlayerDie();
+      let { lives } = Context.get();
+      Context.set({ lives: --lives });
+      if (Context.get().lives > 0) {
+        this.resetAfterPlayerDie();
+        this.levelState = LevelState.PLAYER_DIED;
+        setTimeout(
+          () => (this.levelState = LevelState.LEVEL_IN_PROGRESS),
+          3000
+        );
+      } else {
+        Context.set({ gameState: GameState.GAME_OVER });
+      }
     }
   };
   resetAfterPlayerDie = () => {
