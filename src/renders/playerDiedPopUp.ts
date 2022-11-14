@@ -15,6 +15,6 @@ export const renderOnPlayerDied = () => {
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#ffffff';
   ctx.fillText('Player Died', 285, 270);
-  ctx.fillText(`${lives} lives left`, 285, 300);
+  ctx.fillText(`${lives} ${lives === 1 ? 'life' : 'lives'} left`, 285, 300);
   ctx.closePath();
 };
