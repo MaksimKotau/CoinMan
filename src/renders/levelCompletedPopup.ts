@@ -1,4 +1,7 @@
-export const renderOnLevelCompleted = (ctx: CanvasRenderingContext2D) => {
+import Context from '../context';
+
+export const renderOnLevelCompleted = () => {
+  const { levelIndex, graphicContext: ctx } = Context.get();
   ctx.beginPath();
   ctx.rect(70, 185, 430, 200);
   ctx.fillStyle = 'red';
@@ -12,6 +15,6 @@ export const renderOnLevelCompleted = (ctx: CanvasRenderingContext2D) => {
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#ffffff';
   ctx.fillText('CONGRATULATIONS!!!', 285, 270);
-  ctx.fillText(`LEVEL COMPLETED!!!`, 285, 300);
+  ctx.fillText(`LEVEL ${levelIndex} COMPLETED!!!`, 285, 300);
   ctx.closePath();
 };

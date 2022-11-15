@@ -11,7 +11,7 @@ import { LevelState } from './renders/types/levelStateType';
 
 class Game {
   private canvas: HTMLCanvasElement = null;
-  private levels: Array<ILevel> = [level1, level2];
+  private levels: Array<ILevel> = [level2, level1];
   private currentLevel: Level = null;
   constructor() {
     this.canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
@@ -25,7 +25,11 @@ class Game {
       levelIndex: 0
     });
     ctx.fillStyle = 'black';
-    this.currentLevel = new Level(this.levels[0], this.onEarningPoints);
+    this.currentLevel = new Level(
+      this.levels[0],
+      this.onEarningPoints,
+      this.onLevelCompleted
+    );
     document.addEventListener('keydown', this.keyDownHandler, false);
     this.draw();
   }
@@ -43,6 +47,24 @@ class Game {
   onEarningPoints = (points: number) => {
     const scores = Context.get().scores;
     Context.set({ scores: points + scores });
+  };
+  onLevelCompleted = () => {
+    const { levelIndex } = Context.get();
+    if (levelIndex + 1 === this.levels.length) {
+      Context.set({ gameState: GameState.GAME_WON });
+    } else {
+      const newLevelIndex = levelIndex + 1;
+      Context.set({
+        levelIndex: newLevelIndex,
+        levelState: LevelState.LEVEL_NOT_STARTED
+      });
+      this.currentLevel = new Level(
+        this.levels[newLevelIndex],
+        this.onEarningPoints,
+        this.onLevelCompleted
+      );
+      this.currentLevel.startLevel();
+    }
   };
   draw = () => {
     const ctx = Context.get().graphicContext;

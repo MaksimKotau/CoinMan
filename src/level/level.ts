@@ -2,6 +2,7 @@ import Context from '../context';
 import { EMPTY_ZONE } from '../maps/constants';
 import { ILevel, IMap } from '../maps/IMap';
 import { Enemy } from '../renders/enemy';
+import { renderOnLevelCompleted } from '../renders/levelCompletedPopup';
 import { renderMap } from '../renders/mapRenderer';
 import { Player } from '../renders/player';
 import { renderOnPlayerDied } from '../renders/playerDiedPopUp';
@@ -9,18 +10,24 @@ import { renderStartNewLevel } from '../renders/startNewLevelRenderer';
 import { Direction } from '../renders/types/directionType';
 import { GameState } from '../renders/types/gameStateType';
 import { LevelState } from '../renders/types/levelStateType';
-import { getEnemyCollisionID } from '../renders/utils';
+import { getEnemyCollisionID, numberOfDotsLeftOnMap } from '../renders/utils';
 
 export class Level {
   private mapData: IMap = null;
   private player: Player = null;
   private enemies: Array<Enemy> = [];
   private onEarningPoints: (points: number) => void = null;
+  private onLevelCompleted: () => void = null;
   private level: ILevel = null;
-  constructor(level: ILevel, onEarningPoints: (points: number) => void) {
+  constructor(
+    level: ILevel,
+    onEarningPoints: (points: number) => void,
+    onLevelCompleted: () => void
+  ) {
     this.mapData = level.map;
     this.level = level;
     this.onEarningPoints = onEarningPoints;
+    this.onLevelCompleted = onLevelCompleted;
     this.player = new Player(
       level.player_start_position.x,
       level.player_start_position.y
@@ -51,10 +58,18 @@ export class Level {
     if (levelState === LevelState.PLAYER_DIED) {
       renderOnPlayerDied();
     }
+    if (levelState === LevelState.LEVEL_COMPLETED) {
+      renderOnLevelCompleted();
+    }
   };
   onEatingDot = (data: { col: number; row: number }) => {
     this.onEarningPoints(1);
     this.mapData[data.row][data.col] = EMPTY_ZONE;
+    const dotsLeft: number = numberOfDotsLeftOnMap(this.mapData);
+    if (dotsLeft === 0) {
+      Context.set({ levelState: LevelState.LEVEL_COMPLETED });
+      setTimeout(() => this.onLevelCompleted(), 3000);
+    }
   };
   move = () => {
     if (Context.get().levelState === LevelState.LEVEL_IN_PROGRESS) {

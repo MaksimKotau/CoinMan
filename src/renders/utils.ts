@@ -1,6 +1,7 @@
 import {
   BRICKS_COUNT,
   COLLISION_DISTANCE,
+  DOT_ZONE,
   ENEMY_COLORS,
   TILE_SIZE,
   WALL_ZONE
@@ -155,5 +156,17 @@ export const getCellsByCoordinates = (
     col: Math.trunc((coordinates.x + TILE_SIZE - 1) / TILE_SIZE),
     row: Math.trunc((coordinates.y + TILE_SIZE - 1) / TILE_SIZE)
   });
+  return result;
+};
+
+export const numberOfDotsLeftOnMap = (map: IMap) => {
+  let result = 0;
+  for (let row = 0; row < map.length; row++) {
+    for (let col = 0; col < map[row].length; col++) {
+      if (map[row][col] === DOT_ZONE) {
+        result++;
+      }
+    }
+  }
   return result;
 };
