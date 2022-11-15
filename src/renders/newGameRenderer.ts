@@ -1,6 +1,6 @@
 import Context from '../context';
 import { SCREEN_SIZE } from '../maps/constants';
-import { GameState } from './types/gameStateType';
+import { GameState } from '../types/gameStateType';
 
 export const renderGameStart = (startGame: () => void) => {
   const ctx = Context.get().graphicContext;

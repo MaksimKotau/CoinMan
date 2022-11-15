@@ -7,9 +7,9 @@ import { renderMap } from '../renders/mapRenderer';
 import { Player } from '../renders/player';
 import { renderOnPlayerDied } from '../renders/playerDiedPopUp';
 import { renderStartNewLevel } from '../renders/startNewLevelRenderer';
-import { Direction } from '../renders/types/directionType';
-import { GameState } from '../renders/types/gameStateType';
-import { LevelState } from '../renders/types/levelStateType';
+import { Direction } from '../types/directionType';
+import { GameState } from '../types/gameStateType';
+import { LevelState } from '../types/levelStateType';
 import { getEnemyCollisionID, numberOfDotsLeftOnMap } from '../renders/utils';
 
 export class Level {

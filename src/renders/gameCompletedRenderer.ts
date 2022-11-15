@@ -1,10 +1,10 @@
 import Context from '../context';
 
-export const renderOnLevelCompleted = () => {
-  const { levelIndex, graphicContext: ctx } = Context.get();
+export const renderGameCompleted = () => {
+  const { graphicContext: ctx } = Context.get();
   ctx.beginPath();
   ctx.rect(70, 185, 430, 200);
-  ctx.fillStyle = 'red';
+  ctx.fillStyle = 'purple';
   ctx.shadowColor = 'black';
   ctx.shadowBlur = 50;
   ctx.fill();
@@ -14,7 +14,6 @@ export const renderOnLevelCompleted = () => {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText('CONGRATULATIONS!!!', 285, 270);
-  ctx.fillText(`LEVEL ${levelIndex + 1} COMPLETED!!!`, 285, 300);
+  ctx.fillText(`Congratulations! You have won the game!`, 285, 270);
   ctx.closePath();
 };

@@ -9,8 +9,8 @@ import {
 import { IMap } from '../maps/IMap';
 import { Enemy } from './enemy';
 import { Player } from './player';
-import { Coordinates } from './types/coordinatesType';
-import { Direction } from './types/directionType';
+import { Coordinates } from '../types/coordinatesType';
+import { Direction } from '../types/directionType';
 
 export const getRandomInteger = (n: number) => {
   return Math.round(Math.random() * n);

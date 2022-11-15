@@ -1,5 +1,5 @@
-import { GameState } from '../renders/types/gameStateType';
-import { LevelState } from '../renders/types/levelStateType';
+import { GameState } from '../types/gameStateType';
+import { LevelState } from '../types/levelStateType';
 
 export interface IGameContext {
   graphicContext: CanvasRenderingContext2D;

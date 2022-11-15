@@ -7,7 +7,7 @@ import {
   TILE_SIZE
 } from '../maps/constants';
 import { IMap } from '../maps/IMap';
-import { Direction } from './types/directionType';
+import { Direction } from '../types/directionType';
 import Context from '../context';
 
 export class Player {

@@ -6,8 +6,9 @@ import { ILevel } from './maps/IMap';
 import { renderGameOver } from './renders/gameOverRenderer';
 import { renderGameToolbar } from './renders/gameToolbar';
 import { renderGameStart } from './renders/newGameRenderer';
-import { GameState } from './renders/types/gameStateType';
-import { LevelState } from './renders/types/levelStateType';
+import { GameState } from './types/gameStateType';
+import { LevelState } from './types/levelStateType';
+import { renderGameCompleted } from './renders/gameCompletedRenderer';
 
 class Game {
   private canvas: HTMLCanvasElement = null;
@@ -51,7 +52,7 @@ class Game {
   onLevelCompleted = () => {
     const { levelIndex } = Context.get();
     if (levelIndex + 1 === this.levels.length) {
-      Context.set({ gameState: GameState.GAME_WON });
+      Context.set({ gameState: GameState.GAME_COMPLETED });
     } else {
       const newLevelIndex = levelIndex + 1;
       Context.set({
@@ -67,15 +68,17 @@ class Game {
     }
   };
   draw = () => {
-    const ctx = Context.get().graphicContext;
+    const { gameState, graphicContext: ctx } = Context.get();
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    if (Context.get().gameState === GameState.GAME_IN_PROGRESS) {
+    if (gameState === GameState.GAME_IN_PROGRESS) {
       this.currentLevel.move();
       this.currentLevel.render();
-    } else if (Context.get().gameState === GameState.GAME_NOT_STARTED) {
+    } else if (gameState === GameState.GAME_NOT_STARTED) {
       renderGameStart(this.startGame);
-    } else if (Context.get().gameState === GameState.GAME_OVER) {
+    } else if (gameState === GameState.GAME_OVER) {
       renderGameOver();
+    } else if (gameState === GameState.GAME_COMPLETED) {
+      renderGameCompleted();
     }
     renderGameToolbar();
     requestAnimationFrame(this.draw);

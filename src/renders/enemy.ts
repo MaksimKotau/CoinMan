@@ -1,7 +1,7 @@
 import { hasWallCollision } from './utils';
 import { ENEMY_SIZE, PLAYER_SPEED, TILE_SIZE } from '../maps/constants';
 import { IMap } from '../maps/IMap';
-import { Direction } from './types/directionType';
+import { Direction } from '../types/directionType';
 import {
   getRandomEnemyColor,
   getRandomInteger,
