@@ -2,15 +2,13 @@ import Context from '../context';
 import { EMPTY_ZONE } from '../maps/constants';
 import { ILevel, IMap } from '../maps/IMap';
 import { Enemy } from '../renders/enemy';
-import { renderOnLevelCompleted } from '../renders/levelCompletedPopup';
 import { renderMap } from '../renders/mapRenderer';
 import { Player } from '../renders/player';
-import { renderOnPlayerDied } from '../renders/playerDiedPopUp';
-import { renderStartNewLevel } from '../renders/startNewLevelRenderer';
+import { renderPopup } from '../renders/popup';
+import { getEnemyCollisionID, numberOfDotsLeftOnMap } from '../renders/utils';
 import { Direction } from '../types/directionType';
 import { GameState } from '../types/gameStateType';
 import { LevelState } from '../types/levelStateType';
-import { getEnemyCollisionID, numberOfDotsLeftOnMap } from '../renders/utils';
 
 export class Level {
   private mapData: IMap = null;
@@ -46,29 +44,35 @@ export class Level {
     );
   };
   render = () => {
-    const { levelState } = Context.get();
+    const { levelState, levelIndex, lives } = Context.get();
     renderMap(this.mapData);
     this.player.render();
     this.enemies.forEach((enemy) => {
       enemy.render();
     });
     if (levelState === LevelState.LEVEL_NOT_STARTED) {
-      renderStartNewLevel();
+      renderPopup('info', [`Level ${levelIndex + 1}`])
     }
     if (levelState === LevelState.PLAYER_DIED) {
-      renderOnPlayerDied();
+      renderPopup('warn', ['Player died...', `${lives} ${lives === 1 ? 'life' : 'lives'} left`])
     }
     if (levelState === LevelState.LEVEL_COMPLETED) {
-      renderOnLevelCompleted();
+      renderPopup('info', ['Congratulations!!!', `Level ${levelIndex + 1} completed!!!`])
     }
   };
   onEatingDot = (data: { col: number; row: number }) => {
     this.onEarningPoints(1);
     this.mapData[data.row][data.col] = EMPTY_ZONE;
     const dotsLeft: number = numberOfDotsLeftOnMap(this.mapData);
+    const { levelsCount, levelIndex } = Context.get();
     if (dotsLeft === 0) {
-      Context.set({ levelState: LevelState.LEVEL_COMPLETED });
-      setTimeout(() => this.onLevelCompleted(), 3000);
+      if (levelIndex + 1 === levelsCount) {
+        this.onLevelCompleted();
+      } else {
+        Context.set({ levelState: LevelState.LEVEL_COMPLETED });
+        setTimeout(() => this.onLevelCompleted(), 3000);
+      }
+
     }
   };
   move = () => {

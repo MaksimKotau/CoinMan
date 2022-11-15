@@ -1,14 +1,14 @@
 import Context from './context';
 import { Level } from './level/level';
+import { ILevel } from './maps/IMap';
 import { level1 } from './maps/level_1';
 import { level2 } from './maps/level_2';
-import { ILevel } from './maps/IMap';
 import { renderGameOver } from './renders/gameOverRenderer';
 import { renderGameToolbar } from './renders/gameToolbar';
 import { renderGameStart } from './renders/newGameRenderer';
+import { renderPopup } from './renders/popup';
 import { GameState } from './types/gameStateType';
 import { LevelState } from './types/levelStateType';
-import { renderGameCompleted } from './renders/gameCompletedRenderer';
 
 class Game {
   private canvas: HTMLCanvasElement = null;
@@ -23,7 +23,8 @@ class Game {
       graphicContext: ctx,
       lives: 3,
       scores: 0,
-      levelIndex: 0
+      levelIndex: 0,
+      levelsCount: this.levels.length
     });
     ctx.fillStyle = 'black';
     this.currentLevel = new Level(
@@ -78,7 +79,7 @@ class Game {
     } else if (gameState === GameState.GAME_OVER) {
       renderGameOver();
     } else if (gameState === GameState.GAME_COMPLETED) {
-      renderGameCompleted();
+      renderPopup('info', ['Congratulations!', 'You won the game!'])
     }
     renderGameToolbar();
     requestAnimationFrame(this.draw);

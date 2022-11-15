@@ -8,6 +8,7 @@ export interface IGameContext {
   gameState: GameState;
   levelState: LevelState;
   levelIndex: number;
+  levelsCount: number;
 }
 
 class GameContext {
