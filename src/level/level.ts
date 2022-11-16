@@ -22,8 +22,8 @@ export class Level {
     onEarningPoints: (points: number) => void,
     onLevelCompleted: () => void
   ) {
-    this.mapData = level.map;
-    this.level = level;
+    this.mapData = JSON.parse(JSON.stringify(level.map));
+    this.level = JSON.parse(JSON.stringify(level));
     this.onEarningPoints = onEarningPoints;
     this.onLevelCompleted = onLevelCompleted;
     this.player = new Player(

@@ -4,7 +4,7 @@ import { SCREEN_SIZE } from '../maps/constants';
 export const renderPopup = (type: 'info' | 'warn', messages: Array<string>) => {
   const ctx = Context.get().graphicContext;
   ctx.beginPath();
-  ctx.rect(70, 135, SCREEN_SIZE - 140, 300);
+  ctx.rect(70, 185, SCREEN_SIZE - 140, 200);
   ctx.fillStyle = type == 'info' ? '#7b1fa2' : '#f44336';
   ctx.shadowColor = 'black';
   ctx.shadowBlur = 50;

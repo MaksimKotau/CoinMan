@@ -1,5 +1,6 @@
 import Context from '../context';
 import { SCREEN_SIZE } from '../maps/constants';
+import { GameState } from '../types/gameStateType';
 
 const results = [
   { name: 'Peter', scores: 300 },
@@ -7,18 +8,22 @@ const results = [
   { name: 'Oliver', scores: 100 }
 ];
 
-export const renderGameOver = () => {
-  const { graphicContext: ctx, scores } = Context.get();
+export const renderGameFinished = () => {
+  const { graphicContext: ctx, scores, gameState } = Context.get();
   ctx.beginPath();
-  ctx.font = 'bold 90px sans-serif';
+  ctx.font = `bold ${gameState === GameState.GAME_OVER ? 90 : 50}px sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.shadowColor = '#f44336';
+  ctx.shadowColor = gameState === GameState.GAME_OVER ? '#f44336' : '#7b1fa2';
   ctx.shadowBlur = 50;
-  ctx.fillStyle = '#f44336';
-  ctx.fillText('GAME OVER', 285, 150);
+  ctx.fillStyle = gameState === GameState.GAME_OVER ? '#f44336' : '#7b1fa2';
+  ctx.fillText(
+    gameState === GameState.GAME_OVER ? 'GAME OVER' : 'YOU WON THE GAME',
+    285,
+    150
+  );
   ctx.rect(210, 500, 150, 40);
-  ctx.fillStyle = '#f44336';
+  ctx.fillStyle = gameState === GameState.GAME_OVER ? '#f44336' : '#7b1fa2';
   ctx.fill();
   ctx.shadowColor = 'none';
   ctx.shadowBlur = 0;

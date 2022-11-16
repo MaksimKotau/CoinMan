@@ -5,10 +5,9 @@ import { INITIAL_LIVES_COUNT } from './maps/constants';
 import { ILevel } from './maps/IMap';
 import { level1 } from './maps/level_1';
 import { level2 } from './maps/level_2';
-import { renderGameOver } from './renders/gameOverRenderer';
+import { renderGameFinished } from './renders/gameFinishedRenderer';
 import { renderGameToolbar } from './renders/gameToolbar';
 import { renderGameStart } from './renders/newGameRenderer';
-import { renderPopup } from './renders/popup';
 import { GameState } from './types/gameStateType';
 import { LevelState } from './types/levelStateType';
 
@@ -61,7 +60,8 @@ class Game {
     Context.set({ scores: points + scores });
   };
   onLevelCompleted = () => {
-    const { levelIndex } = Context.get();
+    const { levelIndex, scores } = Context.get();
+    Context.set({ scores: scores + 50 });
     if (levelIndex + 1 === this.levels.length) {
       Context.set({ gameState: GameState.GAME_COMPLETED });
     } else {
@@ -84,14 +84,14 @@ class Game {
     if (gameState === GameState.GAME_IN_PROGRESS) {
       this.currentLevel.move();
       this.currentLevel.render();
+      renderGameToolbar();
     } else if (gameState === GameState.GAME_NOT_STARTED) {
       renderGameStart();
     } else if (gameState === GameState.GAME_OVER) {
-      renderGameOver();
+      renderGameFinished();
     } else if (gameState === GameState.GAME_COMPLETED) {
-      renderPopup('info', ['Congratulations!', 'You won the game!']);
+      renderGameFinished();
     }
-    renderGameToolbar();
     requestAnimationFrame(this.draw);
   };
   startGame = () => {
