@@ -9,6 +9,7 @@ export interface IGameContext {
   levelState: LevelState;
   levelIndex: number;
   levelsCount: number;
+  canvas: HTMLCanvasElement;
 }
 
 class GameContext {
@@ -18,13 +19,13 @@ class GameContext {
   };
   set(data: Partial<IGameContext>) {
     if (this.context === null) {
-      throw new Error('Context is notinitialized');
+      throw new Error('Context is not initialized');
     }
     this.context = { ...this.context, ...data };
   }
   get() {
     if (this.context === null) {
-      throw new Error('Context is notinitialized');
+      throw new Error('Context is not initialized');
     }
     return this.context;
   }

@@ -1,5 +1,7 @@
 import Context from './context';
+import { mouseClickHandler } from './events/eventHandler';
 import { Level } from './level/level';
+import { INITIAL_LIVES_COUNT } from './maps/constants';
 import { ILevel } from './maps/IMap';
 import { level1 } from './maps/level_1';
 import { level2 } from './maps/level_2';
@@ -11,20 +13,28 @@ import { GameState } from './types/gameStateType';
 import { LevelState } from './types/levelStateType';
 
 class Game {
-  private canvas: HTMLCanvasElement = null;
   private levels: Array<ILevel> = [level2, level1];
   private currentLevel: Level = null;
   constructor() {
-    this.canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
-    const ctx = this.canvas.getContext('2d');
+    const canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
+    canvas.addEventListener('click', (event) => {
+      mouseClickHandler({
+        x: event.offsetX,
+        y: event.offsetY,
+        start: this.startGame,
+        restart: this.restartGame
+      });
+    });
+    const ctx = canvas.getContext('2d');
     Context.initContext({
       gameState: GameState.GAME_NOT_STARTED,
       levelState: LevelState.LEVEL_NOT_STARTED,
       graphicContext: ctx,
-      lives: 3,
+      lives: INITIAL_LIVES_COUNT,
       scores: 0,
       levelIndex: 0,
-      levelsCount: this.levels.length
+      levelsCount: this.levels.length,
+      canvas
     });
     ctx.fillStyle = 'black';
     this.currentLevel = new Level(
@@ -69,17 +79,17 @@ class Game {
     }
   };
   draw = () => {
-    const { gameState, graphicContext: ctx } = Context.get();
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    const { gameState, graphicContext: ctx, canvas } = Context.get();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (gameState === GameState.GAME_IN_PROGRESS) {
       this.currentLevel.move();
       this.currentLevel.render();
     } else if (gameState === GameState.GAME_NOT_STARTED) {
-      renderGameStart(this.startGame);
+      renderGameStart();
     } else if (gameState === GameState.GAME_OVER) {
       renderGameOver();
     } else if (gameState === GameState.GAME_COMPLETED) {
-      renderPopup('info', ['Congratulations!', 'You won the game!'])
+      renderPopup('info', ['Congratulations!', 'You won the game!']);
     }
     renderGameToolbar();
     requestAnimationFrame(this.draw);
@@ -87,6 +97,20 @@ class Game {
   startGame = () => {
     Context.set({ gameState: GameState.GAME_IN_PROGRESS });
     this.currentLevel.startLevel();
+  };
+  restartGame = () => {
+    Context.set({
+      gameState: GameState.GAME_NOT_STARTED,
+      levelIndex: 0,
+      levelState: LevelState.LEVEL_NOT_STARTED,
+      lives: INITIAL_LIVES_COUNT,
+      scores: 0
+    });
+    this.currentLevel = new Level(
+      this.levels[0],
+      this.onEarningPoints,
+      this.onLevelCompleted
+    );
   };
 }
 

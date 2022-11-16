@@ -51,13 +51,19 @@ export class Level {
       enemy.render();
     });
     if (levelState === LevelState.LEVEL_NOT_STARTED) {
-      renderPopup('info', [`Level ${levelIndex + 1}`])
+      renderPopup('info', [`Level ${levelIndex + 1}`]);
     }
     if (levelState === LevelState.PLAYER_DIED) {
-      renderPopup('warn', ['Player died...', `${lives} ${lives === 1 ? 'life' : 'lives'} left`])
+      renderPopup('warn', [
+        'Player died...',
+        `${lives} ${lives === 1 ? 'life' : 'lives'} left`
+      ]);
     }
     if (levelState === LevelState.LEVEL_COMPLETED) {
-      renderPopup('info', ['Congratulations!!!', `Level ${levelIndex + 1} completed!!!`])
+      renderPopup('info', [
+        'Congratulations!!!',
+        `Level ${levelIndex + 1} completed!!!`
+      ]);
     }
   };
   onEatingDot = (data: { col: number; row: number }) => {
@@ -72,7 +78,6 @@ export class Level {
         Context.set({ levelState: LevelState.LEVEL_COMPLETED });
         setTimeout(() => this.onLevelCompleted(), 3000);
       }
-
     }
   };
   move = () => {
