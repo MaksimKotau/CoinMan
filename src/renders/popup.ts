@@ -9,6 +9,8 @@ export const renderPopup = (type: 'info' | 'warn', messages: Array<string>) => {
   ctx.shadowColor = 'black';
   ctx.shadowBlur = 50;
   ctx.fill();
+  ctx.strokeStyle = "white";
+  ctx.strokeRect(80,195, SCREEN_SIZE - 160 , 180)
   ctx.shadowColor = 'none';
   ctx.shadowBlur = 0;
   ctx.font = 'bold 24px sans-serif';

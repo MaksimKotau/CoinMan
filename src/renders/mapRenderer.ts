@@ -1,7 +1,5 @@
 import {
   BRICKS_COUNT,
-  DOT_COLOR,
-  DOT_RADIUS,
   DOT_ZONE,
   TILE_SIZE,
   WALL_COLOR,
@@ -40,11 +38,24 @@ const renderDot = (row: number, col: number, ctx: CanvasRenderingContext2D) => {
   ctx.arc(
     col * TILE_SIZE + TILE_SIZE / 2,
     row * TILE_SIZE + TILE_SIZE / 2,
-    DOT_RADIUS,
+    10,
     0,
     Math.PI * 2
   );
-  ctx.fillStyle = DOT_COLOR;
-  ctx.fill();
-  ctx.closePath();
+  ctx.fillStyle = "#efef5d";
+  ctx.fill()
+  ctx.strokeStyle = "#CC9933"
+  ctx.arc(
+    col * TILE_SIZE + TILE_SIZE / 2,
+    row * TILE_SIZE + TILE_SIZE / 2,
+    9,
+    0,
+    Math.PI * 2
+  );
+  ctx.stroke()
+  ctx.font = 'bold 11px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#CC9933';
+  ctx.fillText('$', col * TILE_SIZE + TILE_SIZE / 2,  row * TILE_SIZE + TILE_SIZE / 2 + 1)
 };
