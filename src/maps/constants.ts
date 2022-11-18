@@ -7,7 +7,7 @@ export const WALL_COLOR = '#336ac1';
 export const PLAYER_SIZE = 26;
 export const PLAYER_COLOR = 'yellow';
 
-export const ENEMY_SIZE = 26;
+export const ENEMY_SIZE = 20;
 export const ENEMY_COLORS = ['green', 'blue', 'red'];
 
 export const PLAYER_SPEED = 1;
