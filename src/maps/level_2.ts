@@ -29,6 +29,6 @@ export const level2: ILevel = {
     { x: 9, y: 9 },
     { x: 9, y: 10 },
     { x: 9, y: 8 },
-    { x: 9, y: 9 },
+    { x: 9, y: 9 }
   ]
 };
