@@ -3,9 +3,9 @@ import { SCREEN_SIZE } from '../maps/constants';
 import { GameState } from '../types/gameStateType';
 
 const results = [
-  { name: 'Peter', scores: 300 },
-  { name: 'Amelia', scores: 200 },
-  { name: 'Oliver', scores: 100 }
+  { name: 'Pavel', scores: 1000 },
+  { name: 'Max', scores: 500 },
+  { name: 'Dimon', scores: 300 }
 ];
 
 export const renderGameFinished = () => {

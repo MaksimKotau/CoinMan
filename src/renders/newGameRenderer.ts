@@ -15,32 +15,19 @@ export const renderGameStart = () => {
   ctx.closePath();
 
   ctx.beginPath();
-  ctx.arc(
-    150,
-    SCREEN_SIZE/2 - 5,
-    30,
-    0,
-    Math.PI * 2
-  );
-  ctx.fillStyle = "#efef5d";
-  ctx.fill()
-  ctx.strokeStyle = "#CC9933"
-  ctx.arc(
-    150,
-    SCREEN_SIZE / 2 - 5,
-    25,
-    0,
-    Math.PI * 2
-  );
-  ctx.stroke()
+  ctx.arc(150, SCREEN_SIZE / 2 - 5, 30, 0, Math.PI * 2);
+  ctx.fillStyle = '#efef5d';
+  ctx.fill();
+  ctx.strokeStyle = '#CC9933';
+  ctx.arc(150, SCREEN_SIZE / 2 - 5, 25, 0, Math.PI * 2);
+  ctx.stroke();
   ctx.font = 'bold 45px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#CC9933';
-  ctx.fillText('$', 150,  SCREEN_SIZE / 2 - 2)
+  ctx.fillText('$', 150, SCREEN_SIZE / 2 - 2);
   ctx.closePath();
 
-  
   ctx.beginPath();
   ctx.rect(220, 400, 130, 40);
   ctx.fillStyle = '#7b1fa2';

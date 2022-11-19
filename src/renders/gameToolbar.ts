@@ -1,11 +1,16 @@
-import { SCREEN_SIZE, TILE_SIZE, TOOLBAR_HEIGHT, WALL_COLOR } from '../maps/constants';
+import {
+  CONCRETE_COLOR,
+  SCREEN_SIZE,
+  TILE_SIZE,
+  TOOLBAR_HEIGHT
+} from '../maps/constants';
 import Context from '../context';
 
 export const renderGameToolbar = () => {
   const { lives, graphicContext: ctx } = Context.get();
   ctx.beginPath();
   ctx.rect(0, SCREEN_SIZE, SCREEN_SIZE, TOOLBAR_HEIGHT);
-  ctx.strokeStyle = WALL_COLOR;
+  ctx.strokeStyle = CONCRETE_COLOR;
   ctx.lineWidth = 3;
   ctx.stroke();
   ctx.closePath();
@@ -17,7 +22,7 @@ export const renderGameToolbar = () => {
 };
 
 const renderHeart = (index: number) => {
-  const ctx = Context.get().graphicContext
+  const ctx = Context.get().graphicContext;
   ctx.beginPath();
   ctx.arc(10 + index * TILE_SIZE, SCREEN_SIZE + 10, 5, 0, Math.PI, true);
   ctx.arc(20 + index * TILE_SIZE, SCREEN_SIZE + 10, 5, 0, Math.PI, true);
@@ -44,7 +49,7 @@ const renderHeart = (index: number) => {
 };
 
 const renderScores = () => {
-  const {graphicContext: ctx, scores} = Context.get()
+  const { graphicContext: ctx, scores } = Context.get();
   ctx.beginPath();
   ctx.font = 'bold 18px sans-serif';
   ctx.textAlign = 'end';
@@ -53,13 +58,13 @@ const renderScores = () => {
   ctx.fillText(
     `SCORES: ${scores}`,
     SCREEN_SIZE - 5,
-    SCREEN_SIZE + TILE_SIZE / 2
+    SCREEN_SIZE + TILE_SIZE / 2 + 1
   );
   ctx.closePath();
 };
 
 const renderLevelNumber = () => {
-  const {graphicContext: ctx, levelIndex} = Context.get();
+  const { graphicContext: ctx, levelIndex } = Context.get();
   ctx.beginPath();
   ctx.font = 'bold 18px sans-serif';
   ctx.textAlign = 'center';
@@ -68,7 +73,7 @@ const renderLevelNumber = () => {
   ctx.fillText(
     `LEVEL: ${levelIndex + 1}`,
     SCREEN_SIZE / 2,
-    SCREEN_SIZE + TILE_SIZE / 2
+    SCREEN_SIZE + TILE_SIZE / 2 + 1
   );
   ctx.closePath();
-}
+};

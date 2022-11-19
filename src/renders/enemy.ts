@@ -36,85 +36,92 @@ export class Enemy {
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.moveTo(this.x + 18, this.y +11)
+    ctx.moveTo(this.x + 18, this.y + 11);
     ctx.lineTo(this.x + 27, this.y + 6);
     ctx.lineTo(this.x + 20, this.y + 20);
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.moveTo(this.x + 20, this.y +10)
+    ctx.moveTo(this.x + 20, this.y + 10);
     ctx.lineTo(this.x + 29, this.y + 15);
     ctx.lineTo(this.x + 20, this.y + 20);
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.moveTo(this.x + 20, this.y +16)
+    ctx.moveTo(this.x + 20, this.y + 16);
     ctx.lineTo(this.x + 27, this.y + 24);
     ctx.lineTo(this.x + 18, this.y + 22);
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.moveTo(this.x + 20, this.y +20)
+    ctx.moveTo(this.x + 20, this.y + 20);
     ctx.lineTo(this.x + 15, this.y + 29);
     ctx.lineTo(this.x + 10, this.y + 20);
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.moveTo(this.x + 12, this.y + 22)
+    ctx.moveTo(this.x + 12, this.y + 22);
     ctx.lineTo(this.x + 3, this.y + 24);
     ctx.lineTo(this.x + 10, this.y + 16);
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.moveTo(this.x + 10, this.y +10)
+    ctx.moveTo(this.x + 10, this.y + 10);
     ctx.lineTo(this.x + 1, this.y + 15);
     ctx.lineTo(this.x + 10, this.y + 20);
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.moveTo(this.x + 12, this.y +11)
+    ctx.moveTo(this.x + 12, this.y + 11);
     ctx.lineTo(this.x + 3, this.y + 6);
     ctx.lineTo(this.x + 10, this.y + 20);
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.moveTo(this.x + 20, this.y +10)
+    ctx.moveTo(this.x + 20, this.y + 10);
     ctx.lineTo(this.x + 15, this.y + 1);
     ctx.lineTo(this.x + 10, this.y + 10);
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.ellipse( this.x + 19, this.y + 12, 2, 3, Math.PI / 4, 0, 2 * Math.PI);
-    ctx.fillStyle = "white";
-    ctx.fill()
+    ctx.ellipse(this.x + 19, this.y + 12, 2, 3, Math.PI / 4, 0, 2 * Math.PI);
+    ctx.fillStyle = 'white';
+    ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.ellipse( this.x + 11, this.y + 12, 2, 3, Math.PI * 7 / 4, 0, 2 * Math.PI);
-    ctx.fillStyle = "white";
-    ctx.fill()
+    ctx.ellipse(
+      this.x + 11,
+      this.y + 12,
+      2,
+      3,
+      (Math.PI * 7) / 4,
+      0,
+      2 * Math.PI
+    );
+    ctx.fillStyle = 'white';
+    ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.arc( this.x + 12, this.y + 13, 1, 0, Math.PI * 2);
-    ctx.fillStyle = "black";
-    ctx.fill()
+    ctx.arc(this.x + 12, this.y + 13, 1, 0, Math.PI * 2);
+    ctx.fillStyle = 'black';
+    ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.arc( this.x + 18, this.y + 13, 1, 0, Math.PI * 2);
-    ctx.fillStyle = "black";
-    ctx.fill()
+    ctx.arc(this.x + 18, this.y + 13, 1, 0, Math.PI * 2);
+    ctx.fillStyle = 'black';
+    ctx.fill();
     ctx.closePath();
-
   };
   move = (map: IMap) => {
     const availableDirections = this.getAvailableDirections(map);

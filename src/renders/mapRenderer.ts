@@ -1,8 +1,9 @@
 import {
   BRICKS_COUNT,
+  BRICK_COLOR,
+  CONCRETE_COLOR,
   DOT_ZONE,
   TILE_SIZE,
-  WALL_COLOR,
   WALL_ZONE
 } from '../maps/constants';
 import { IMap } from '../maps/IMap';
@@ -28,7 +29,70 @@ const renderWall = (
 ) => {
   ctx.beginPath();
   ctx.rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-  ctx.fillStyle = WALL_COLOR;
+  ctx.fillStyle = CONCRETE_COLOR;
+  ctx.strokeStyle = CONCRETE_COLOR;
+  ctx.fill();
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.rect(col * TILE_SIZE, row * TILE_SIZE + 1, TILE_SIZE * 0.2, 8);
+  ctx.fillStyle = BRICK_COLOR;
+  ctx.strokeStyle = BRICK_COLOR;
+  ctx.fill();
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.rect(
+    col * TILE_SIZE + TILE_SIZE * 0.2 + 2,
+    row * TILE_SIZE + 1,
+    TILE_SIZE * 0.8 - 2,
+    8
+  );
+  ctx.fillStyle = BRICK_COLOR;
+  ctx.strokeStyle = BRICK_COLOR;
+  ctx.fill();
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.rect(col * TILE_SIZE, row * TILE_SIZE + 11, TILE_SIZE / 2 - 1, 8);
+  ctx.fillStyle = BRICK_COLOR;
+  ctx.strokeStyle = BRICK_COLOR;
+  ctx.fill();
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.rect(
+    col * TILE_SIZE + TILE_SIZE / 2 + 1,
+    row * TILE_SIZE + 11,
+    TILE_SIZE / 2 - 1,
+    8
+  );
+  ctx.fillStyle = BRICK_COLOR;
+  ctx.strokeStyle = BRICK_COLOR;
+  ctx.fill();
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.rect(
+    col * TILE_SIZE,
+    row * TILE_SIZE + TILE_SIZE - 9,
+    TILE_SIZE * 0.8,
+    8
+  );
+  ctx.fillStyle = BRICK_COLOR;
+  ctx.strokeStyle = BRICK_COLOR;
+  ctx.fill();
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.rect(
+    col * TILE_SIZE + TILE_SIZE * 0.8 + 2,
+    row * TILE_SIZE + TILE_SIZE - 9,
+    TILE_SIZE * 0.2 - 2,
+    8
+  );
+  ctx.fillStyle = BRICK_COLOR;
+  ctx.strokeStyle = BRICK_COLOR;
   ctx.fill();
   ctx.closePath();
 };
@@ -42,9 +106,9 @@ const renderDot = (row: number, col: number, ctx: CanvasRenderingContext2D) => {
     0,
     Math.PI * 2
   );
-  ctx.fillStyle = "#efef5d";
-  ctx.fill()
-  ctx.strokeStyle = "#CC9933"
+  ctx.fillStyle = '#efef5d';
+  ctx.fill();
+  ctx.strokeStyle = '#CC9933';
   ctx.arc(
     col * TILE_SIZE + TILE_SIZE / 2,
     row * TILE_SIZE + TILE_SIZE / 2,
@@ -52,10 +116,14 @@ const renderDot = (row: number, col: number, ctx: CanvasRenderingContext2D) => {
     0,
     Math.PI * 2
   );
-  ctx.stroke()
+  ctx.stroke();
   ctx.font = 'bold 11px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#CC9933';
-  ctx.fillText('$', col * TILE_SIZE + TILE_SIZE / 2,  row * TILE_SIZE + TILE_SIZE / 2 + 1)
+  ctx.fillText(
+    '$',
+    col * TILE_SIZE + TILE_SIZE / 2,
+    row * TILE_SIZE + TILE_SIZE / 2 + 1
+  );
 };

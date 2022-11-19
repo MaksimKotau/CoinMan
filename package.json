@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "open-game-html": "open-cli index.html",
+    "open-game-html": "open-cli dist/index.html",
     "lint": "npx eslint src",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier src --check",
@@ -19,6 +19,7 @@
   "license": "ISC",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "copy-webpack-plugin": "^11.0.0",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
