@@ -55,7 +55,7 @@ export class Level {
     }
     if (levelState === LevelState.PLAYER_DIED) {
       renderPopup('warn', [
-        'Player died...',
+        'Coinman died...',
         `${lives} ${lives === 1 ? 'life' : 'lives'} left`
       ]);
     }

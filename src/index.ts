@@ -5,6 +5,7 @@ import { INITIAL_LIVES_COUNT } from './maps/constants';
 import { ILevel } from './maps/IMap';
 import { level1 } from './maps/level_1';
 import { level2 } from './maps/level_2';
+import { level3 } from './maps/level_3';
 import { renderGameFinished } from './renders/gameFinishedRenderer';
 import { renderGameToolbar } from './renders/gameToolbar';
 import { renderGameStart } from './renders/newGameRenderer';
@@ -12,7 +13,7 @@ import { GameState } from './types/gameStateType';
 import { LevelState } from './types/levelStateType';
 
 class Game {
-  private levels: Array<ILevel> = [level2, level1];
+  private levels: Array<ILevel> = [level1, level2, level3];
   private currentLevel: Level = null;
   constructor() {
     const canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
