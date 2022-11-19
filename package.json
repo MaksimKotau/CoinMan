@@ -1,6 +1,7 @@
 {
   "name": "coin_man",
   "version": "1.0.0",
+  "homepage": "https://MaksimKotau.github.io/CoinMan",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +13,9 @@
     "format": "npm run prettier:fix && npm run lint:fix",
     "build": "webpack",
     "start": "npm run build && npm run open-game-html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
